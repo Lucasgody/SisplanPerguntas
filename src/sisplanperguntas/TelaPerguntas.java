@@ -81,6 +81,9 @@ public class TelaPerguntas extends javax.swing.JFrame {
     String niveils;
     int numero_ger;
     String datas;
+    String temp;
+    String resp;
+    String res;
     
     public boolean issuspended = false;
         int hora = 0;
@@ -986,6 +989,7 @@ public class TelaPerguntas extends javax.swing.JFrame {
           
           if (qtde_rea == qtde_per){
               JOptionPane.showMessageDialog(null, "Questionário Completo com Sucesso!");
+              
               Iinicia.setEnabled(false);
               responde.setEnabled(false);
               jLCodPergunta.setText("");
