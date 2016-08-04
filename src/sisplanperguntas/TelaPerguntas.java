@@ -1114,9 +1114,12 @@ public class TelaPerguntas extends javax.swing.JFrame {
     }//GEN-LAST:event_RelatorioAlternativaActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        TelaRanking ranking = new TelaRanking();
-        ranking.setVisible(true);
-        ranking.setLocationRelativeTo(this);
+        String tela = "Ranking";
+        TelaLogin login = new TelaLogin();
+        login.acesso7(this);
+        login.recebeTela3(tela);
+        login.setVisible(true);
+        login.setLocationRelativeTo(this);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**

@@ -27,6 +27,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private TelaPerguntas acesso;
     private TelaPerguntas acesso2;
     private TelaPerguntas acesso6;
+    private TelaPerguntas acesso7;
 
     /**
      * Creates new form TelaLogin
@@ -191,6 +192,10 @@ public class TelaLogin extends javax.swing.JFrame {
                                         RelCadPergunta perguntas = new RelCadPergunta();
                                         perguntas.setVisible(true);
                                     }
+                                    if (form.equals("Ranking")){
+                                        TelaRanking ranking = new TelaRanking();
+                                        ranking.setVisible(true);
+                                    }
                                     //String acessos = "Permitido";
                                     
                                     //acesso.acesso_adm(acessos);
@@ -257,6 +262,10 @@ public class TelaLogin extends javax.swing.JFrame {
                                     if (form.equals("RelPerguntas")){
                                         RelCadPergunta perguntas = new RelCadPergunta();
                                         perguntas.setVisible(true);
+                                    }
+                                    if (form.equals("Ranking")){
+                                        TelaRanking ranking = new TelaRanking();
+                                        ranking.setVisible(true);
                                     }
                                     //String acessos = "Permitido";
                                     
@@ -362,6 +371,14 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     void recebeTela2(String tela) {
+        form = tela;
+    }
+
+    void acesso7(TelaPerguntas aThis) {
+        acesso7 = aThis;
+    }
+
+    void recebeTela3(String tela) {
         form = tela;
     }
 
