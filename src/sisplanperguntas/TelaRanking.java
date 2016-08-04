@@ -5,10 +5,14 @@
  */
 package sisplanperguntas;
 
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,6 +26,16 @@ public class TelaRanking extends javax.swing.JFrame {
      */
     public TelaRanking() {
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        Insets in = Toolkit.getDefaultToolkit().getScreenInsets(this.getGraphicsConfiguration()); 
+
+         Dimension d = Toolkit.getDefaultToolkit().getScreenSize(); 
+
+          int width = d.width-(in.left + in.top); 
+          int height = d.height-(in.top + in.bottom); 
+          setSize(width,height); 
+          setLocation(in.left,in.top);
     }
 
     /**
