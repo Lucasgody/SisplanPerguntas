@@ -195,6 +195,7 @@ public class TelaLogin extends javax.swing.JFrame {
                                     if (form.equals("Ranking")){
                                         TelaRanking ranking = new TelaRanking();
                                         ranking.setVisible(true);
+                                        ranking.setLocationRelativeTo(this);
                                     }
                                     //String acessos = "Permitido";
                                     
@@ -266,6 +267,7 @@ public class TelaLogin extends javax.swing.JFrame {
                                     if (form.equals("Ranking")){
                                         TelaRanking ranking = new TelaRanking();
                                         ranking.setVisible(true);
+                                        ranking.setLocationRelativeTo(this);
                                     }
                                     //String acessos = "Permitido";
                                     
