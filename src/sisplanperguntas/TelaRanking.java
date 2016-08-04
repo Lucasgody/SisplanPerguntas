@@ -5,6 +5,10 @@
  */
 package sisplanperguntas;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -64,10 +68,25 @@ public class TelaRanking extends javax.swing.JFrame {
         });
 
         altera.setText("Alterar");
+        altera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alteraActionPerformed(evt);
+            }
+        });
 
         consultar.setText("Consultar");
+        consultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultarActionPerformed(evt);
+            }
+        });
 
         fechar.setText("Fechar");
+        fechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,6 +129,67 @@ public class TelaRanking extends javax.swing.JFrame {
         ranking.setVisible(true);
         ranking.setLocationRelativeTo(this);
     }//GEN-LAST:event_incluirActionPerformed
+
+    private void consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarActionPerformed
+        Connection connection = null;
+        Statement statement = null;
+        int linha = 0;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:Perguntas.db");
+            connection.setAutoCommit(false);
+            
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM RANKING;");
+
+           //Zera limpa a tabela grid
+            DefaultTableModel mode = (DefaultTableModel) jTableRanking.getModel();
+            mode.setRowCount(0);
+            
+            while (resultSet.next()) {
+                int numero = resultSet.getInt("NUMERO");
+                String nome = resultSet.getString("NOME");
+                int qtde_perguntas_realizadas = resultSet.getInt("QTDE_PERGUNTAS_REALIZADAS");
+                String tempo_total = resultSet.getString("TEMPO_TOTAL");
+                String tempo_medio = resultSet.getString("TEMPO_MEDIO");
+                int qtde_acertos = resultSet.getInt("QTDE_ACERTOS");
+                
+                //Lista os clientes na tabela (Grid)
+                DefaultTableModel model = (DefaultTableModel) jTableRanking.getModel();
+                model.addRow(new Object[]{numero, nome, qtde_perguntas_realizadas, tempo_total, tempo_medio, qtde_acertos});
+                
+                linha++;
+                
+            }
+            resultSet.close();
+            statement.close();            
+            connection.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + "erro na consulta de perguntas tela RelCadPergunta botão consultar " + e.getMessage());
+            System.exit(0);
+        }
+    }//GEN-LAST:event_consultarActionPerformed
+
+    private void fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecharActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_fecharActionPerformed
+
+    private void alteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alteraActionPerformed
+        int linhaSelecionada =               jTableRanking.getSelectedRow();
+        int ranking          =  (int)        jTableRanking.getValueAt(linhaSelecionada, 0);
+        String nome          =  (String)     jTableRanking.getValueAt(linhaSelecionada, 1);
+        int qtde_perguntas   =  (int)        jTableRanking.getValueAt(linhaSelecionada, 3);
+        String tempo_total   =  (String)     jTableRanking.getValueAt(linhaSelecionada, 4);
+        String tempo_medio   =  (String)     jTableRanking.getValueAt(linhaSelecionada, 5);
+        int acertos           =  (int)        jTableRanking.getValueAt(linhaSelecionada, 6);
+        
+        TelaInclusaoRanking raking = new TelaInclusaoRanking();
+        raking.TelaRanking(this);
+        raking.recebera(ranking,nome,qtde_perguntas,tempo_total,tempo_medio,acertos);
+        raking.setVisible(true);
+        raking.setLocationRelativeTo(this);
+        
+    }//GEN-LAST:event_alteraActionPerformed
 
     /**
      * @param args the command line arguments

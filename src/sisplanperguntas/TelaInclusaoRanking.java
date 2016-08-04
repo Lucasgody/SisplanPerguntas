@@ -5,6 +5,12 @@
  */
 package sisplanperguntas;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Suporte
@@ -71,6 +77,11 @@ public class TelaInclusaoRanking extends javax.swing.JFrame {
         });
 
         fecha.setText("Fechar");
+        fecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,12 +165,57 @@ public class TelaInclusaoRanking extends javax.swing.JFrame {
         
         TelaRanking.recebera(Integer.toString(ranking),nome,qtde_perguntas,tempo_total,tempo_medio,qtde_acertos);
         
+        Connection connection = null;
+        Statement statement = null;
+        try{
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:banco.db");
+            connection.setAutoCommit(false);
+            System.out.println("Banco de dados aberto com sucesso");
+            
+            
+            statement = connection.createStatement();
+            String sql = "DELETE from RANKING where NOME = '" + jTNome.getText() + "'";
+            statement.executeUpdate(sql);
+            
+            
+            
+                        
+            connection.commit();
+            
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM RANKING;");
+            while (resultSet.next()){
+                
+                String rankng = resultSet.getString("NUMERO");
+                String nomeusuario = resultSet.getString("NOME");
+                String qtde_perguntas_realizadas = resultSet.getString("QTDE_PERGUNTAS_REALIZADAS");
+                String tempototal = resultSet.getString("TEMPO_TOTAL");
+                String tempomedio = resultSet.getString("TEMPO_MEDIO");
+                String qtdeacertos = resultSet.getString("QTDE_ACERTOS");
+            }
+            
+            resultSet.close();
+            statement.close();
+            connection.close();
+        }   catch (Exception e) {
+            
+          
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            
+        }
+        
         Ranking novoRanking;
         novoRanking = new Ranking(ranking, nome, qtde_perguntas, tempo_total, tempo_medio, qtde_acertos);
         CadastroRanking.Cadastrar(ranking, nome, qtde_perguntas, tempo_total, tempo_medio, qtde_acertos);
         
+        
+        
         this.setVisible(false);
     }//GEN-LAST:event_confirmaActionPerformed
+
+    private void fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_fechaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,6 +271,16 @@ public class TelaInclusaoRanking extends javax.swing.JFrame {
 
     void TelaRanking(TelaRanking aThis) {
         TelaRanking = aThis;
+    }
+
+    void recebera(int ranking, String nome, int qtde_perguntas, String tempo_total, String tempo_medio, int acertos) {
+        jTRanking.setText(Integer.toString(ranking));
+        jTNome.setText(nome);
+        jTQtde_Perguntas.setText(Integer.toString(qtde_perguntas));
+        jFTTempo_Total.setText(tempo_total);
+        jFTTempo_Medio.setText(tempo_medio);
+        jTQtde_Acertos.setText(Integer.toString(acertos));
+        
     }
 
     
