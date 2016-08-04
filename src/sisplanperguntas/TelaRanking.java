@@ -5,6 +5,8 @@
  */
 package sisplanperguntas;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Suporte
@@ -55,6 +57,11 @@ public class TelaRanking extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTableRanking);
 
         incluir.setText("Incluir");
+        incluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                incluirActionPerformed(evt);
+            }
+        });
 
         altera.setText("Alterar");
 
@@ -96,6 +103,13 @@ public class TelaRanking extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void incluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incluirActionPerformed
+        TelaInclusaoRanking ranking = new TelaInclusaoRanking();
+        ranking.TelaRanking(this);
+        ranking.setVisible(true);
+        ranking.setLocationRelativeTo(this);
+    }//GEN-LAST:event_incluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,4 +154,11 @@ public class TelaRanking extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableRanking;
     // End of variables declaration//GEN-END:variables
+
+    void recebera(String ranking, String nome, int qtde_perguntas, String tempo_total, String tempo_medio, int qtde_acertos) {
+        
+        DefaultTableModel model = (DefaultTableModel) jTableRanking.getModel();
+        model.addRow(new Object[]{ranking, nome, qtde_perguntas, tempo_total, tempo_medio, qtde_acertos});        
+                
+    }
 }
