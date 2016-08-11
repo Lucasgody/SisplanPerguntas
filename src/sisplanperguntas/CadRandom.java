@@ -23,6 +23,8 @@ public class CadRandom extends javax.swing.JFrame {
     public CadRandom() {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        setTitle("Gamification    Cadastro de Random");
     }
 
     /**
@@ -138,7 +140,7 @@ public class CadRandom extends javax.swing.JFrame {
             } catch (Exception e) {
 
                 System.err.println(e.getClass().getName() + ": " + e.getMessage());
-
+                JOptionPane.showMessageDialog(null, e);
             }
         
         

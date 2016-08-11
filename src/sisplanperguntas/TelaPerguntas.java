@@ -49,6 +49,8 @@ public class TelaPerguntas extends javax.swing.JFrame {
           setSize(width,height); 
           setLocation(in.left,in.top);
           
+          setTitle("Gamification    Perguntas");
+          
           jTUsuario.setEditable(false);
           jTCorreta1.setVisible(false);
           jTCorreta2.setVisible(false);
@@ -550,7 +552,7 @@ public class TelaPerguntas extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + "erro na consulta de pacientes botão consultar " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
         
         
@@ -634,7 +636,7 @@ public class TelaPerguntas extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + "erro na consulta de pacientes botão consultar " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
         try {
             Class.forName("org.sqlite.JDBC");
@@ -665,7 +667,7 @@ public class TelaPerguntas extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + "erro na consulta de pacientes botão consultar " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
         String data = jFTData.getText();
         String nivel = jTNivel.getText();
@@ -697,7 +699,7 @@ public class TelaPerguntas extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + "erro na consulta de pacientes botão consultar " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
         
         while(lista.size() < 1)  
@@ -755,7 +757,7 @@ public class TelaPerguntas extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + "erro na consulta de pacientes botão consultar " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
     }
         
@@ -910,7 +912,7 @@ public class TelaPerguntas extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + "erro na consulta de pacientes botão consultar " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
         
         String data = jFTData.getText();
@@ -948,7 +950,7 @@ public class TelaPerguntas extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + "erro na consulta de pacientes botão consultar " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
         
         try {
@@ -978,7 +980,7 @@ public class TelaPerguntas extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
         
                
@@ -1042,7 +1044,7 @@ public class TelaPerguntas extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
               
           }

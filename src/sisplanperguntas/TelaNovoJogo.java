@@ -26,6 +26,8 @@ public class TelaNovoJogo extends javax.swing.JFrame {
         
         jFTData.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
         jFTData.setEnabled(false);
+        
+        setTitle("Gamification    Novo Jogo");
     }
 
     /**

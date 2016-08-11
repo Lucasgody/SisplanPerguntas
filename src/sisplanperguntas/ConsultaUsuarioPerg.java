@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,6 +25,9 @@ public class ConsultaUsuarioPerg extends javax.swing.JFrame {
      */
     public ConsultaUsuarioPerg() {
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        setTitle("Gamification    Consulta Usuario");
     }
 
     /**
@@ -161,7 +165,7 @@ public class ConsultaUsuarioPerg extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + "erro na consulta de pacientes botão consultar " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_consultaActionPerformed
 

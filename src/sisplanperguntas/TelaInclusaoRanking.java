@@ -23,6 +23,9 @@ public class TelaInclusaoRanking extends javax.swing.JFrame {
      */
     public TelaInclusaoRanking() {
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        setTitle("Gamification    Inclusão de Ranking");
     }
 
     /**
@@ -201,7 +204,7 @@ public class TelaInclusaoRanking extends javax.swing.JFrame {
             
           
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            
+            JOptionPane.showMessageDialog(null, e);
         }
         
         Ranking novoRanking;

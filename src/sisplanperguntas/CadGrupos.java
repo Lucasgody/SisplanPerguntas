@@ -38,6 +38,8 @@ public class CadGrupos extends javax.swing.JFrame {
           setSize(width,height); 
           setLocation(in.left,in.top);
           
+          setTitle("Gamification    Cadastro de Grupos");
+          
           jTCodGrupo.setEnabled(false);
           
           Connection connection = null;
@@ -238,7 +240,7 @@ public class CadGrupos extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + "erro na consulta de pacientes botão consultar " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_gravaActionPerformed
 
@@ -274,7 +276,7 @@ public class CadGrupos extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + "erro na consulta de pacientes botão consultar " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_consultaActionPerformed
 

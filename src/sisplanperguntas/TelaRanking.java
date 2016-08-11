@@ -5,15 +5,32 @@
  */
 package sisplanperguntas;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
+import sun.applet.Main;
 
 /**
  *
@@ -27,6 +44,8 @@ public class TelaRanking extends javax.swing.JFrame {
     public TelaRanking() {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        setTitle("Gamification    Ranking");
         
         
     }
@@ -46,6 +65,7 @@ public class TelaRanking extends javax.swing.JFrame {
         altera = new javax.swing.JButton();
         consultar = new javax.swing.JButton();
         fechar = new javax.swing.JButton();
+        imprime = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,6 +115,13 @@ public class TelaRanking extends javax.swing.JFrame {
             }
         });
 
+        imprime.setText("Imprimir");
+        imprime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imprimeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,6 +136,8 @@ public class TelaRanking extends javax.swing.JFrame {
                         .addComponent(altera, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(consultar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(imprime, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -120,20 +149,19 @@ public class TelaRanking extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(incluir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(altera, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap()))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(consultar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(incluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(altera, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(consultar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(imprime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -182,7 +210,7 @@ public class TelaRanking extends javax.swing.JFrame {
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + "erro na consulta de perguntas tela RelCadPergunta botão consultar " + e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_consultarActionPerformed
 
@@ -206,6 +234,68 @@ public class TelaRanking extends javax.swing.JFrame {
         raking.setLocationRelativeTo(this);
         
     }//GEN-LAST:event_alteraActionPerformed
+
+    private void imprimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imprimeActionPerformed
+        FileOutputStream fos = null;
+        PrintStream p = new PrintStream(fos);
+        p.println("Ranking                  |Nome                   |Qtde     |Tempo Total   |Tempo Médio    |Qtde Acertos   ");
+        
+        for (int i = 0;i < jTableRanking.getRowCount();i ++){
+              
+              String ranking            = (String)  jTableRanking.getValueAt(i, 0);
+              String nome               = (String)  jTableRanking.getValueAt(i, 1);
+              int qtde_perguntas        = (Integer) jTableRanking.getValueAt(i, 2);
+              String tempo_total        = (String)  jTableRanking.getValueAt(i, 3);
+              String tempo_medio        = (String)  jTableRanking.getValueAt(i, 4);
+              int acertos               = (Integer)  jTableRanking.getValueAt(i, 5);
+            
+         
+        Properties config = new Properties();
+        String arquivo = "SisplanPerguntas.ini";
+        
+        boolean success = (new File(config.getProperty("Ranking")+ new SimpleDateFormat("dd-MM-yyyy").format(new Date(System.currentTimeMillis())) +".doc")).delete();
+        
+        
+        try {
+            config.load(new FileInputStream(arquivo));
+            
+            fos = new FileOutputStream(config.getProperty("Ranking")+ new SimpleDateFormat("dd-MM-yyyy").format(new Date(System.currentTimeMillis())) +".doc", true);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RelRespostaPerg.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Verifique o Caminho do Relatorio Perguntas no arquivo SisplanPerguntas.ini\n"
+                    +""+ ex);
+        }
+        catch (IOException ex) {
+        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(null, ex);
+      }
+         PrintStream ps = new PrintStream(fos);  
+         
+         
+        
+        
+         ps.println(ranking +"                  |"+nome+"                   |"+qtde_perguntas+"     |"+tempo_total+"   |"+tempo_medio+"    |"+acertos+"   ");
+         
+        }
+            
+         
+        UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Times New Roman", Font.PLAIN, 20)));//fonte da mensagem
+        UIManager.put("OptionPane.messageForeground", Color.BLACK);//cor da fonte da mensagem
+        JOptionPane.showMessageDialog(null, "Arquivo Gerado com Sucesso!");
+        
+        Properties config = new Properties();
+        String arquivo = "SisplanPerguntas.ini";
+        
+         try {
+            config.load(new FileInputStream(arquivo));
+            
+                java.awt.Desktop.getDesktop().open(new File(config.getProperty("Ranking")+ new SimpleDateFormat("dd-MM-yyyy").format(new Date(System.currentTimeMillis())) +".doc"));
+                
+                
+            } catch (IOException ex) {
+                Logger.getLogger(RelRespostaPerg.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_imprimeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,6 +336,7 @@ public class TelaRanking extends javax.swing.JFrame {
     private javax.swing.JButton altera;
     private javax.swing.JButton consultar;
     private javax.swing.JButton fechar;
+    private javax.swing.JButton imprime;
     private javax.swing.JButton incluir;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableRanking;

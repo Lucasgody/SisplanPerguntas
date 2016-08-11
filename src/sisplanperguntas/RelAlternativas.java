@@ -31,6 +31,8 @@ public class RelAlternativas extends javax.swing.JFrame {
           int height = d.height-(in.top + in.bottom); 
           setSize(width,height); 
           setLocation(in.left,in.top);
+          
+          setTitle("Gamification    Relatorio de Alternativas");
     }
 
     /**

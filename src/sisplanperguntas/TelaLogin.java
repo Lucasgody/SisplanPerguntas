@@ -35,7 +35,7 @@ public class TelaLogin extends javax.swing.JFrame {
     public TelaLogin() {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setTitle("Acesso Administrativo");
+        setTitle("Gamification  Acesso Administrativo");
        
         
         

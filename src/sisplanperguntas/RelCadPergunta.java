@@ -45,6 +45,7 @@ public class RelCadPergunta extends javax.swing.JFrame {
           setSize(width,height); 
           setLocation(in.left,in.top);
           
+          setTitle("Gamification    Relatorio Perguntas");
           
           
           
